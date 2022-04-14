@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
 import baseball.domain.BaseballNumbers;
+import baseball.domain.GameResult;
 import baseball.domain.input.InputNumbers;
 import baseball.domain.score.ScorePredicate;
 import baseball.domain.score.impl.BallScorePredicate;
@@ -39,18 +40,16 @@ public class BaseballScoreTest {
         console.close();
     }
 
-    void strikePredicateMocking(String input) {
+    void strikePredicateMocking(String input, List<Integer> 컴퓨터가_생성한_난수) {
         when(baseballNumbers.getBaseballNumber())
-                .thenReturn(Arrays.asList(1,3,5));
+                .thenReturn(컴퓨터가_생성한_난수);
         when(Console.readLine())
                 .thenReturn(input);
 
         inputNumbers.createInputNumbers();
     }
 
-    void ballPredicateMocking(String input) {
-        List<Integer> 컴퓨터가_생성한_난수 = Arrays.asList(1,3,5);
-
+    void ballPredicateMocking(String input, List<Integer> 컴퓨터가_생성한_난수) {
         when(baseballNumbers.getBaseballNumber())
                 .thenReturn(컴퓨터가_생성한_난수);
         when(Console.readLine())
@@ -78,7 +77,8 @@ public class BaseballScoreTest {
         @ParameterizedTest
         @ValueSource(strings = {"246", "789" , "351" , "513"})
         void zero_strike_test(String input) {
-            strikePredicateMocking(input);
+            List<Integer> 컴퓨터가_생성한_난수 = Arrays.asList(1,3,5);
+            strikePredicateMocking(input, 컴퓨터가_생성한_난수);
 
             int result = strikeScorePredicate.execute(inputNumbers, baseballNumbers);
             assertEquals(0, result);
@@ -88,7 +88,8 @@ public class BaseballScoreTest {
         @ParameterizedTest
         @ValueSource(strings = {"124", "153" , "245" , "234"})
         void one_strike_test(String input) {
-            strikePredicateMocking(input);
+            List<Integer> 컴퓨터가_생성한_난수 = Arrays.asList(1,3,5);
+            strikePredicateMocking(input, 컴퓨터가_생성한_난수);
 
             int result = strikeScorePredicate.execute(inputNumbers, baseballNumbers);
             assertEquals(1, result);
@@ -98,7 +99,8 @@ public class BaseballScoreTest {
         @ParameterizedTest
         @ValueSource(strings = {"134", "125" , "138" , "235"})
         void two_strike_test(String input) {
-            strikePredicateMocking(input);
+            List<Integer> 컴퓨터가_생성한_난수 = Arrays.asList(1,3,5);
+            strikePredicateMocking(input, 컴퓨터가_생성한_난수);
 
             int result = strikeScorePredicate.execute(inputNumbers, baseballNumbers);
             assertEquals(2, result);
@@ -109,7 +111,8 @@ public class BaseballScoreTest {
         void three_strike_test() {
             String input = "135";
 
-            strikePredicateMocking(input);
+            List<Integer> 컴퓨터가_생성한_난수 = Arrays.asList(1,3,5);
+            strikePredicateMocking(input, 컴퓨터가_생성한_난수);
 
             int result = strikeScorePredicate.execute(inputNumbers, baseballNumbers);
             assertEquals(3, result);
@@ -117,7 +120,7 @@ public class BaseballScoreTest {
     }
 
     @Nested
-    @DisplayName("사용자가 값을 입력시에 스트라이크가 몇개인지 리턴하라")
+    @DisplayName("사용자가 값을 입력시에 볼이 몇개인지 리턴하라")
     class BallScoreTest {
         private ScorePredicate ballScorePredicate;
 
@@ -130,7 +133,8 @@ public class BaseballScoreTest {
         @ParameterizedTest
         @ValueSource(strings = {"246" , "135" , "137"})
         void zero_ball_test(String input) {
-            ballPredicateMocking(input);
+            List<Integer> 컴퓨터가_생성한_난수 = Arrays.asList(1,3,5);
+            ballPredicateMocking(input, 컴퓨터가_생성한_난수);
 
             int result = ballScorePredicate.execute(inputNumbers, baseballNumbers);
             assertEquals(0, result);
@@ -140,7 +144,8 @@ public class BaseballScoreTest {
         @ParameterizedTest
         @ValueSource(strings = {"324" , "567" , "398"})
         void one_ball_test(String input) {
-            ballPredicateMocking(input);
+            List<Integer> 컴퓨터가_생성한_난수 = Arrays.asList(1,3,5);
+            ballPredicateMocking(input, 컴퓨터가_생성한_난수);
 
             int result = ballScorePredicate.execute(inputNumbers, baseballNumbers);
             assertEquals(1, result);
@@ -150,7 +155,8 @@ public class BaseballScoreTest {
         @ParameterizedTest
         @ValueSource(strings = {"512", "514" , "312" , "359"})
         void two_ball_test(String input) {
-            ballPredicateMocking(input);
+            List<Integer> 컴퓨터가_생성한_난수 = Arrays.asList(1,3,5);
+            ballPredicateMocking(input, 컴퓨터가_생성한_난수);
 
             int result = ballScorePredicate.execute(inputNumbers, baseballNumbers);
             assertEquals(2, result);
@@ -160,10 +166,28 @@ public class BaseballScoreTest {
         @ParameterizedTest
         @ValueSource(strings = {"513" , "351"})
         void three_ball_test(String input) {
-            ballPredicateMocking(input);
+            List<Integer> 컴퓨터가_생성한_난수 = Arrays.asList(1,3,5);
+            ballPredicateMocking(input, 컴퓨터가_생성한_난수);
 
             int result = ballScorePredicate.execute(inputNumbers, baseballNumbers);
             assertEquals(3, result);
+        }
+    }
+    
+    @Nested
+    @DisplayName("사용자가 값을 입력시 낫싱인지 판단하라")
+    class NothingTest {
+        private GameResult gameResult;
+
+        @BeforeEach
+        void init() {
+            gameResult = new GameResult();
+        }
+
+        @Test
+        @DisplayName("zz")
+        void zz() {
+//            strikePredicateMocking();
         }
     }
 }
