@@ -1,6 +1,7 @@
 package baseball;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
@@ -177,17 +178,22 @@ public class BaseballScoreTest {
     @Nested
     @DisplayName("사용자가 값을 입력시 낫싱인지 판단하라")
     class NothingTest {
-        private GameResult gameResult;
 
-        @BeforeEach
-        void init() {
-            gameResult = new GameResult();
-        }
+        @DisplayName("strike , out 이 모두 0이면 상태는 nothing이 된다")
+        @ParameterizedTest
+        @ValueSource(strings = {"246" , "467" , "798" , "876"})
+        void zz(String input) {
+            List<Integer> 컴퓨터가_생성한_난수 = Arrays.asList(1,3,5);
 
-        @Test
-        @DisplayName("zz")
-        void zz() {
-//            strikePredicateMocking();
+            strikePredicateMocking(input, 컴퓨터가_생성한_난수);
+            ballPredicateMocking(input, 컴퓨터가_생성한_난수);
+
+            GameResult gameResult = new GameResult();
+            gameResult.calculateScore(inputNumbers, baseballNumbers);
+
+            assertEquals(0, gameResult.getStrikeCount());
+            assertEquals(0, gameResult.getOutCount());
+            assertTrue(gameResult.isNothing());
         }
     }
 }
