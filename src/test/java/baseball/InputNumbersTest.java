@@ -11,6 +11,7 @@ import baseball.domain.input.validator.InputNumbersNumberFormatValidator;
 import baseball.domain.input.validator.InputNumbersOverlapValidator;
 import baseball.domain.input.validator.InputNumbersSizeValidator;
 import baseball.domain.input.validator.InputNumbersValidator;
+import baseball.domain.input.validator.InputNumbersZeroValidator;
 import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -70,7 +71,19 @@ public class InputNumbersTest {
                 validator.execute(input);
             }).isInstanceOf(IllegalArgumentException.class);
         }
+
+        @DisplayName("사용자가 입력한 값에 0이 포함되어 있다면 IllegalArgumentException 을 발생시켜야 한다")
+        @ParameterizedTest
+        @ValueSource(strings = {"012" , "130" , "250", "930"})
+        void input_zero_test(String input) {
+            InputNumbersValidator validator = new InputNumbersZeroValidator();
+
+            assertThatThrownBy(() -> {
+                validator.execute(input);
+            }).isInstanceOf(IllegalArgumentException.class);
+        }
     }
+
     @Nested
     @DisplayName("입력값이 정상적이라면 정상적인 List<Integer> 의 형태로 리턴되어야 한다")
     class UserInputSuccessTest {
@@ -121,7 +134,7 @@ public class InputNumbersTest {
 
         @DisplayName("입력값이 올바르지 않다면 IllegalArgumentException 을 발생시켜야 한다")
         @ParameterizedTest
-        @ValueSource(strings = {"1 34" , "112" , "12343" , "qwdewe" , "1w3"})
+        @ValueSource(strings = {"1 34" , "112" , "12343" , "qwdewe" , "1w3" , "012"})
         void input_failed_test(String input) {
             InputNumbers inputNumbers = new InputNumbers();
 
