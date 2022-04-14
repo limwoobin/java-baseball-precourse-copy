@@ -192,7 +192,7 @@ public class BaseballScoreTest {
             gameResult.calculateScore(inputNumbers, baseballNumbers);
 
             assertEquals(0, gameResult.getStrikeCount());
-            assertEquals(0, gameResult.getOutCount());
+            assertEquals(0, gameResult.getBallCount());
             assertTrue(gameResult.isNothing());
         }
     }

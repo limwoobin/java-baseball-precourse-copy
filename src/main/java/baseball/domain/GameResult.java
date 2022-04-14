@@ -9,21 +9,13 @@ public class GameResult {
     private final ScorePredicate strikeScorePredicate;
     private final ScorePredicate ballScorePredicate;
     private int strikeCount;
-    private int outCount;
+    private int ballCount;
 
     public GameResult() {
         this.strikeCount = 0;
-        this.outCount = 0;
+        this.ballCount = 0;
         this.strikeScorePredicate = new StrikeScorePredicate();
         this.ballScorePredicate = new BallScorePredicate();
-    }
-
-    public void strike() {
-        this.strikeCount++;
-    }
-
-    public void out() {
-        this.outCount++;
     }
 
     public boolean isGameOver() {
@@ -34,22 +26,22 @@ public class GameResult {
         return strikeCount;
     }
 
-    public int getOutCount() {
-        return outCount;
+    public int getBallCount() {
+        return ballCount;
     }
 
     public boolean isNothing() {
-        return strikeCount == 0 && outCount == 0;
+        return strikeCount == 0 && ballCount == 0;
     }
 
     public void calculateScore(InputNumbers inputNumbers, BaseballNumbers baseballNumbers) {
         this.clear();
         this.strikeCount = strikeScorePredicate.execute(inputNumbers, baseballNumbers);
-        this.outCount = ballScorePredicate.execute(inputNumbers, baseballNumbers);
+        this.ballCount = ballScorePredicate.execute(inputNumbers, baseballNumbers);
     }
 
     private void clear() {
         this.strikeCount = 0;
-        this.outCount = 0;
+        this.ballCount = 0;
     }
 }
