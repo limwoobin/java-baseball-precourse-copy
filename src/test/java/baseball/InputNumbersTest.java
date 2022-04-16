@@ -6,7 +6,6 @@ import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
 import baseball.domain.input.InputNumbers;
-import baseball.domain.input.validator.InputNumbersSpaceValidator;
 import baseball.domain.input.validator.InputNumbersNumberFormatValidator;
 import baseball.domain.input.validator.InputNumbersOverlapValidator;
 import baseball.domain.input.validator.InputNumbersSizeValidator;
@@ -55,17 +54,6 @@ public class InputNumbersTest {
         @ValueSource(strings = {"221" , "133" , "533" , "555" , "288" , "882"})
         void input_overlap_test(String input) {
             InputNumbersValidator validator = new InputNumbersOverlapValidator();
-
-            assertThatThrownBy(() -> {
-                validator.execute(input);
-            }).isInstanceOf(IllegalArgumentException.class);
-        }
-
-        @DisplayName("사용자가 입력한 값에 빈칸이 포함되어 있다면 IllegalArgumentException 을 발생시켜야 한다")
-        @ParameterizedTest
-        @ValueSource(strings = {"1 3 5" , "1 2 3" , "12 3", "1          23"})
-        void input_space_test(String input) {
-            InputNumbersValidator validator = new InputNumbersSpaceValidator();
 
             assertThatThrownBy(() -> {
                 validator.execute(input);
